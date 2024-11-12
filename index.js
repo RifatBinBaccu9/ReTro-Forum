@@ -4,7 +4,6 @@ const discuss= () =>{
       .then(data => {
          
         detalce(data.posts);
-        console.log(data.posts)
       })
 }
 
@@ -66,6 +65,13 @@ const cardHendel= (title,view) =>{
           </div>`;
     cardHendel.appendChild(bookCardDiv);
 
+   
+    const counting=document.getElementById('count');
+    const countingValue=counting.innerText;
+    const countingCongartInt = parseInt(countingValue);
+    const totleCount = countingCongartInt + 1;
+    
+    counting.innerText=totleCount;
 }
 
 discuss();
