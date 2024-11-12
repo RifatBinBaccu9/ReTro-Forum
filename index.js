@@ -1,21 +1,23 @@
-const discuss= () =>{
-  fetch(`https://openapi.programming-hero.com/api/retro-forum/posts`)
+const discuss= (searchText= 'Comedy') =>{
+  fetch(`https://openapi.programming-hero.com/api/retro-forum/posts?category=${searchText}`)
    .then(res => res.json())
       .then(data => {
-         
-        detalce(data.posts);
+         data=data.posts;
+        detalce(data);
       })
 }
 
 const detalce= (datas) =>{
     const cardId=document.getElementById('card');
+      cardId.textContent='';
+
     datas.forEach(info => {
         const cardDiv=document.createElement('div');
         cardDiv.classList=`bg-[#F3F3F5] p-8 rounded-xl mb-6`;
         cardDiv.innerHTML=`<div class="flex gap-5">
         <div class="indicator relative">
           <span id="isActive">
-          <span class="indicator-item badge bg-green-500 absolute left-14 top-2"></span>
+          <span class="indicator-item badge ${info.isActive ? 'bg-green-500' : 'bg-red-500'}  absolute left-14 top-2"></span>
           </span>
           <div class="bg-base-300 grid h-20 w-20 place-items-center"><img src="${info.image}" alt="" class="rounded-xl"></div>
         </div>
@@ -74,4 +76,11 @@ const cardHendel= (title,view) =>{
     counting.innerText=totleCount;
 }
 
+const Search = () =>{
+   const searchCategorys=document.getElementById('searchCategorys');
+   const searchCategorysValue=searchCategorys.value;
+   console.log(searchCategorysValue)
+   discuss(searchCategorysValue);
+   searchCategorys.value='';
+}
 discuss();
