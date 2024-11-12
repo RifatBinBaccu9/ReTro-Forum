@@ -2,9 +2,9 @@ const discuss= () =>{
   fetch(`https://openapi.programming-hero.com/api/retro-forum/posts`)
    .then(res => res.json())
       .then(data => {
-         data=data.posts;
-        detalce(data);
-        cardHendel(data);
+         
+        detalce(data.posts);
+        console.log(data.posts)
       })
 }
 
@@ -44,7 +44,7 @@ const detalce= (datas) =>{
                 <span >${info.posted_time} min</span>
               </div>
             </div>
-            <button onclick="cardHendel('${info.id}')" class="bg-[#10B981] text-white py-1 px-2 text-xl rounded-full">
+            <button onclick="cardHendel('${info.title}', ${info.view_count})" class="bg-[#10B981] text-white py-1 px-2 text-xl rounded-full">
               <i class="fa-solid fa-envelope"></i>
             </button>
           </div>
@@ -54,28 +54,18 @@ const detalce= (datas) =>{
     });  
 }
 
-// const indicatorInfo= (id) =>{
-//   fetch(`https://openapi.programming-hero.com/api/retro-forum/${id}`)
-//    .then(res => res.json())
-//       .then(dataa => {
-//         deta=dataa.posts;
-//         console.log(deta);
-//       })
-// }
-const cardHendel= (id) =>{
-  // console.log(id)
+const cardHendel= (title,view) =>{
      const cardHendel=document.getElementById('bookCard');
 
      const bookCardDiv=document.createElement('div');
      bookCardDiv.classList=`flex gap-5 bg-white p-4 rounded-lg my-5`;
-     bookCardDiv.innerHTML=`<h1 class="text-xl font-bold" id="titles"></h1>
+     bookCardDiv.innerHTML=`<h1 class="text-xl font-bold" id="titles">${title}</h1>
           <div class="flex gap-2 mt-5">
             <i class="fa-regular fa-eye mt-[4px]"></i>
-            <span></span>
+            <span>${view}</span>
           </div>`;
     cardHendel.appendChild(bookCardDiv);
 
 }
 
 discuss();
-// indicatorInfo()
