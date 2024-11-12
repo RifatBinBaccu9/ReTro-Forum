@@ -1,7 +1,7 @@
 const discuss= (searchText= 'Comedy') =>{
   fetch(`https://openapi.programming-hero.com/api/retro-forum/posts?category=${searchText}`)
-   .then(res => res.json())
-      .then(data => {
+   .then((res) => res.json())
+      .then((data) => {
          data=data.posts;
         detalce(data);
       })
@@ -83,4 +83,48 @@ const Search = () =>{
    discuss(searchCategorysValue);
    searchCategorys.value='';
 }
+
 discuss();
+
+const latest = () =>{
+  fetch(`https://openapi.programming-hero.com/api/retro-forum/latest-posts`)
+  .then((res) => res.json())
+  .then((data) => {
+    latestPost(data);
+  })
+}
+
+const latestPost= (latestPosts) =>{
+  const latestPost=document.getElementById('latestPost');
+  latestPosts.forEach(postInfo => {
+   const latestPostDiv=document.createElement('div');
+   latestPostDiv.classList=`w-[99%] shadow-xl rounded-2xl`;
+   latestPostDiv.innerHTML=`<figure class="px-6 pt-6">
+        <img
+          src="${postInfo.cover_image}"
+          alt="Shoes"
+          class="rounded-xl" />
+      </figure>
+      <div class="px-6 pb-6">
+
+        <div class="flex gap-4 py-3">
+          <i class="fa-solid fa-calendar-days pt-[3px]"></i>
+          <h5 class="">${postInfo.author.posted_date ? postInfo.author.posted_date : "No publish date"}</h5>
+        </div>
+
+        <h2 class="text-xl font-semibold">${postInfo.title}</h2>
+        <p class="py-2">${postInfo.description}</p>
+       
+        <div class="flex gap-4 pt-2">
+          <img src="${postInfo.profile_image}" alt="" class="rounded-full h-[50px] w-[50px]">
+          <div>
+            <h4 class="text-base font-bold">${postInfo.author.name}</h4>
+            <h6 class="text-sm font-normal">${postInfo.author.designation}</h6>
+          </div>
+        </div>
+      </div>`;
+      latestPost.appendChild(latestPostDiv);
+  });
+}
+
+latest()
